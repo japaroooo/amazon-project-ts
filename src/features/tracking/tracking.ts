@@ -1,9 +1,11 @@
-import order from '../../data/order.js'
-import { fetchProducts, getProduct } from '../../data/products.js'
-import { changeDateFormat } from '../../script/utils/date-format.js'
+import { OrderDataReceived } from '../../../data/backend-project.ts'
+import order from '../../../data/order.ts'
+import { fetchProducts, getProduct } from '../../../data/products.js'
+import * as dateFormatJs from '../../utils/date-format.ts'
+import { getElement } from '../../utils/get-element.ts'
 
 const url = new URL(window.location.href)
-const urlOrderId = url.searchParams.get('orderId')
+const urlOrderId: any = url.searchParams.get('orderId')
 const currOrder = order.getOrder(urlOrderId)
 
 async function renderTrackingPage() {
@@ -13,18 +15,18 @@ async function renderTrackingPage() {
    generateHtml +=
       `
          <main class='tracking-wrapper'>
-            <section>Ordered on ${changeDateFormat(currOrder.orderTime)}</section>
+            <section>Ordered on ${dateFormatJs.changeDateFormat(currOrder.orderTime)}</section>
             <section class='item-container'>
                ${productsList(currOrder.products)}
             </section>
          </main>
       `
 
-   document.querySelector('.tracking-order-wrapper').innerHTML = generateHtml
+   getElement('tracking-order-wrapper').innerHTML = generateHtml
 
-   function productsList(products) {
+   function productsList(products: OrderDataReceived['products']) {
       let productHTML = ''
-      currOrder.products.forEach((product) => {
+      products.forEach((product) => {
          const currentProduct = getProduct(product.productId)
          console.log(currentProduct);
          productHTML +=
@@ -32,7 +34,7 @@ async function renderTrackingPage() {
                <div class='item'>
                   <div><h3 >${currentProduct.name}</h3></div>
                   <div>Quantity: ${product.quantity}</div>
-                  <div> Delivery Time(ETA): <b>${changeDateFormat(product.estimatedDeliveryTime)}</b> </div>
+                  <div> Delivery Time(ETA): <b>${dateFormatJs.changeDateFormat(product.estimatedDeliveryTime)}</b> </div>
                   <button class='primary-button tracking-button'>Track Package</button>
                </div>
             `

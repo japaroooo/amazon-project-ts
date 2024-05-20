@@ -1,9 +1,10 @@
-import { products } from '../data/products.js';
+import { fetchProducts, products } from '../data/products.js';
 import cart from '../data/cart-class.ts';
 import { getElement as getHTMLElement } from './utils/get-element.ts';
 
 
 // loadProducts(renderProducts)
+fetchProducts(renderProducts)
 
 export function renderProducts() {
    let generateHTML = ''
@@ -65,6 +66,6 @@ export function renderProducts() {
       }, 2000);
    }
 
+   getHTMLElement('js-cart-quantity').innerHTML = cart.updateCartQuantity()
 }
-getHTMLElement('js-cart-quantity').innerHTML = cart.updateCartQuantity()
 

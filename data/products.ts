@@ -1,3 +1,4 @@
+import { getElement } from '../src/utils/get-element.ts';
 import moneyFormat from '../src/utils/money.ts';
 
 type Rating = {
@@ -14,8 +15,6 @@ export interface ProductDetails {
   type: string
   sizeChartLink: string
 }
-
-
 
 
 class Product {
@@ -47,11 +46,15 @@ class Clothing extends Product {
     super(productDetails)
     this.#sizeChartLink = productDetails.sizeChartLink
   }
+
+  get getSizeChart() {
+    return this.#sizeChartLink
+  }
 }
 
-let products: Array<ProductDetails>
+let products: Array<Product>
 
-function fetchProducts() {
+function fetchProducts(func: Function | undefined = undefined) {
   const productDataPromise = fetch('https://supersimplebackend.dev/products')
     .then((response) => {
       return response.json()
@@ -63,17 +66,23 @@ function fetchProducts() {
         }
         return new Product(productDetail)
       })
+
       console.log('Product loaded');
     })
     .catch(error => {
       console.log(error);
       return
     })
+    .finally(() => {
+      if (func) {
+        func()
+      }
+    })
   return productDataPromise
 }
 
 function getProduct(productId: string) {
-  const accumulator = (acc: any, curr: ProductDetails) => {
+  const accumulator = (acc: any, curr: Product) => {
     acc[curr.id] = curr
     return acc
   }
@@ -84,7 +93,14 @@ function getProduct(productId: string) {
 }
 
 
-export { products, getProduct, fetchProducts }
+function searchProducts() {
+  getElement('search-input').addEventListener('change', () => {
+
+  })
+}
+
+
+export { products, getProduct, fetchProducts, searchProducts }
 // fetchProducts()s
 //   .then(() => {
 //     console.log('Promise has been fulfilled, next step?');

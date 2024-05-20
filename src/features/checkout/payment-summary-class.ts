@@ -1,9 +1,11 @@
-import cart from '../../data/cart-class.js'
-import { getDeliveryOption } from '../../data/delivery-options.mjs';
-import { getProduct } from '../../data/products.js';
-import moneyFormat from '../../script/utils/money.js';
-import { placeOrder } from '../../data/backend-project.js'
-import order from '../../data/order.js';
+order
+import cart from '../../../data/cart-class.js';
+import { getDeliveryOption } from '../../../data/delivery-options.mjs';
+import { getProduct } from '../../../data/products.js';
+import moneyFormat from '../../utils/money.js';
+import { placeOrder } from '../../../data/backend-project.js';
+import { getElement } from '../../utils/get-element.js';
+import order from '../../../data/order.js';
 
 // renderPaymentSummary()
 
@@ -66,12 +68,11 @@ export function renderPaymentSummary() {
          <button class='primary-button js-order-button'>Place Order</button>       
          `
 
-   document.querySelector(".js-payment-summary").classList.add('card')
-   document.querySelector(".js-payment-summary").innerHTML = paymentSummaryHTML
+   getElement('js-payment-summary').classList.add('card')
+   getElement('js-payment-summary').innerHTML = paymentSummaryHTML
 
-   document.querySelector('.js-order-button').addEventListener('click', async () => {
+   getElement('js-order-button').addEventListener('click', async () => {
       await placeOrder(cart.cartItems)
-
    })
 
 }

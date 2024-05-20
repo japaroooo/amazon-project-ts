@@ -1,3 +1,5 @@
+import { CartContents } from "./cart-class"
+
 type DeliveryID = '1' | '2' | '3'
 
 interface DeliveryOption {
@@ -23,13 +25,12 @@ const deliveryOptions: Required<DeliveryOption[]> = [
       id: '3',
       priceCents: 899,
       deliveryDays: 1,
-
    }
 ]
 
 
 
-function getDeliveryOption(deliveryOptionId: string) {
+function getDeliveryOption(deliveryOptionId: CartContents['deliveryOptionId']) {
    // @ts-expect-error
    const accumulator = (acc, curr) => {
       acc[curr.id] = curr

@@ -1,21 +1,21 @@
-import order from '../../data/order.js';
-import { fetchProducts, getProduct, products as fetchProductsResult } from '../../data/products.js';
-import { changeDateFormat } from '../../script/utils/date-format.js';
-import moneyFormat from '../../script/utils/money.js';
+import { OrderDataReceived } from '../../../data/backend-project.ts';
+import order from '../../../data/order.ts'
+import { fetchProducts, getProduct } from '../../../data/products.ts';
+import { changeDateFormat } from '../../utils/date-format.ts';
+import { getElement } from '../../utils/get-element.ts';
+import moneyFormat from '../../utils/money.ts';
 
-renderOrderPage()
+fetchProducts(renderOrderPage)
 
 async function renderOrderPage() {
    let generateHtml = ''
-   await fetchProducts()
 
-   order.orders.forEach((loadOrder) => {
-      const totalPrice = moneyFormat(loadOrder.totalCostCents)
+   order.orders.forEach((loadOrder: OrderDataReceived) => {
       generateHtml +=
          `
             <div class='card order-box'>        
                <section class='order-info'>
-                  <div><span>Total Price</span><h3>$${totalPrice}</h3></div>
+                  <div><span>Total Price</span><h3>$${moneyFormat(loadOrder.totalCostCents)}</h3></div>
                   <div><span>Time Ordered</span><h3>${changeDateFormat(loadOrder.orderTime)}</h3></div>
                   <div><span>Order ID</span><h3>${loadOrder.id}</h3></div>
                </section>
@@ -25,7 +25,7 @@ async function renderOrderPage() {
                      ${displayProducts(loadOrder.products)}
                   </div>
                   <div>
-                     <a href="/features/tracking/tracking.html?orderId=${loadOrder.id}">
+                     <a href="/src/features/tracking/tracking.html?orderId=${loadOrder.id}">
                         <button class='track-package primary-button'>
                            Track Order
                         </button>
@@ -38,12 +38,12 @@ async function renderOrderPage() {
    })
 
 
-   document.querySelector('.order-content').innerHTML = generateHtml
+   getElement('order-content').innerHTML = generateHtml
 
-   function displayProducts(products) {
+   function displayProducts(products: OrderDataReceived['products']) {
       let html = ''
       products.forEach((product) => {
-         const { productId, quantity, estimatedDeliveryTime } = product
+         const { productId, quantity } = product
          const productName = getProduct(productId)
          html +=
             `             

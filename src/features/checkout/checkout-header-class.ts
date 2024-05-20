@@ -1,4 +1,6 @@
-import cart from '../../data/cart-class.ts';
+import cart from "../../../data/cart-class"
+import { getElement } from "../../utils/get-element"
+
 
 // renderHeader()
 
@@ -9,7 +11,7 @@ export function renderHeader() {
          <section class="middle-section">Checkout (${cart.updateCartQuantity()} items)</section>
          <section>Lock</section>
       `
-   document.querySelector('.checkout-header').innerHTML = html
+   getElement('checkout-header').innerHTML = html
 }
 
 

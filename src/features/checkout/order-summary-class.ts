@@ -5,10 +5,11 @@ import cart, { CartContents } from '../../../data/cart-class.ts';
 import { ProductDetails, getProduct } from '../../../data/products.ts';
 import moneyFormat from '../../utils/money.ts';
 import { calculateDeliveryDate, isWeekend } from '../../utils/date-format.ts';
-import { getElement } from '../../utils/get-element.ts';
+import { getAllElement, getElement } from '../../utils/get-element.ts';
 
 
 export function renderOrderSummary() {
+
    let generateHTML = ''
    cart.cartItems.forEach((cartItem) => {
       const { productId, deliveryOptionId, quantity } = cartItem
@@ -95,21 +96,21 @@ export function renderOrderSummary() {
    /**
     * * Update Quantity input
     */
-   document.querySelectorAll('.js-update-button').forEach(button => {
+   getAllElement('js-update-button').forEach((button: HTMLElement) => {
       button.addEventListener('click', () => {
-         const { productId } = button.dataset
+         const { productId }: any = button.dataset
 
          // console.log(productId);
-         const quantityHTML = document.querySelector(`.quantity-details-${productId}`)
+         const quantityHTML = getElement('quantity-details-${productId}')
 
          quantityHTML.innerHTML =
             `
-         Quantity: 
-         <input type='text' class='js-input-value'>
-         <span class='js-save-button span-button' data-product-id='${productId}'>Save</span>
-         `
+               Quantity: 
+               <input type='text' class='js-input-value'>
+               <span class='js-save-button span-button' data-product-id='${productId}'>Save</span>
+            `
 
-         document.querySelector('.js-save-button').addEventListener('click', () => {
+         getElement('js-save-button').addEventListener('click', () => {
             let inputValue = quantityHTML.children[0].value
 
             if (inputValue < 1) inputValue = 1
@@ -127,9 +128,9 @@ export function renderOrderSummary() {
    /**
     * * Delete Product click
     */
-   document.querySelectorAll('.js-delete-button').forEach(button => {
+   getAllElement('js-delete-button').forEach((button: HTMLElement) => {
       button.addEventListener('click', () => {
-         const { productId } = button.dataset
+         const { productId }: any = button.dataset
 
          cart.removeFromCart(productId)
 
@@ -143,10 +144,11 @@ export function renderOrderSummary() {
    /**
     * * Delivery Option changes
     */
-   document.querySelectorAll('.js-delivery-option').forEach(input => {
+
+   getAllElement('js-delivery-option').forEach((input: HTMLElement) => {
       input.addEventListener('change', async (e) => {
          e.preventDefault()
-         const { productId, deliveryId } = input.dataset
+         const { productId, deliveryId }: any = input.dataset
 
          cart.updateDeliveryOption(productId, deliveryId)
 
@@ -157,9 +159,6 @@ export function renderOrderSummary() {
    })
 }
 
-function quantityElement(inputValue, productId) {
-   return
-   `
-     <div class='item-quantity-${productId}'>Quantity: ${inputValue} </div>
-   `
+function quantityElement(inputValue: string, productId: string) {
+   return `<div class='item-quantity-${productId}'>Quantity: ${inputValue} </div>`
 }

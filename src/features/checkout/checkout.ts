@@ -2,7 +2,7 @@ import { renderOrderSummary } from './order-summary-class.ts';
 import { renderPaymentSummary } from './payment-summary-class.ts';
 import { renderHeader } from './checkout-header-class.ts';
 import { fetchProducts } from '../../../data/products.ts';
-import '../../data/backend-project.js'
+import '../../../data/backend-project.ts'
 import cart from '../../../data/cart-class.ts';
 
 

@@ -6,8 +6,6 @@ export interface CartContents {
    deliveryOptionId: string
 }
 
-type Fixture = ReturnType<typeof >
-
 class Cart {
 
    cartItems: CartContents[] = []
