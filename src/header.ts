@@ -11,7 +11,7 @@ getElement('header').innerHTML =
          <a href="/src/features/orders/orders.html" class="order-link"
             ><span>Returns</span><span>& Orders</span></a
          >
-         <a href="/checkout.html" class="cart-link">
+         <a href="/src/features/checkout/checkout.html" class="cart-link">
             <span class="js-cart-quantity"></span><span>Cart</span></a
          >
       </section>

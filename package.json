@@ -19,5 +19,8 @@
   "devDependencies": {
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.11"
   }
 }
