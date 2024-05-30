@@ -99,24 +99,21 @@ function getProduct(productId: string) {
 }
 
 function searchProducts(callback: any) {
-  // let searchResult: Set<Product> = new Set()
   getElement('search-input').addEventListener('keydown', (e: any) => {
-    // searchResult.clear()
-    // products.forEach((product: Product) => {
-    //   if (product['name'].toLowerCase().indexOf(e.target.value) > -1) {
-    //     searchResult.add(product)
-    //   }
-    // })
-    if (e.key === 'Backspace' || !e.target.value) products = cloneProduct
+
     const filterProduct = products.filter(product => product['name'].toLowerCase().includes(e.target.value))
-    products = filterProduct
+    if (e.key === 'Backspace' || !e.target.value) {
+      products = cloneProduct
+    } else {
+      products = filterProduct
+    }
     callback()
   })
 
 }
 
 export { products, getProduct, fetchProducts, searchProducts }
-// fetchProducts()s
+// fetchProducts()
 //   .then(() => {
 //     console.log('Promise has been fulfilled, next step?');
 //   })

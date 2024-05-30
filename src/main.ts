@@ -5,7 +5,6 @@ import { getElement as getHTMLElement } from './utils/get-element.ts';
 
 fetchProducts(renderProducts)
 searchProducts(renderProducts)
-
 export function renderProducts() {
    let generateHTML = ''
 
