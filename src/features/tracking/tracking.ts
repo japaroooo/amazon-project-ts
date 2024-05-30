@@ -9,7 +9,7 @@ const urlOrderId: any = url.searchParams.get('orderId')
 const currOrder = order.getOrder(urlOrderId)
 
 async function renderTrackingPage() {
-   await fetchProducts()
+   await fetchProducts(null)
    let generateHtml = ''
 
    generateHtml +=

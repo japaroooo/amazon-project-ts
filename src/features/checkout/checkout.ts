@@ -12,7 +12,7 @@ async function loadPage() {
       console.log('Page loaded');
 
       await Promise.allSettled([
-         fetchProducts(),
+         fetchProducts(null),
          cart.fetchCart()
       ])
 

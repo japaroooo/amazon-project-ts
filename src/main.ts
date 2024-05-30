@@ -1,14 +1,15 @@
-import { fetchProducts, products } from '../data/products.js';
+import { fetchProducts, products, searchProducts } from '../data/products.js';
 import cart from '../data/cart-class.ts';
 import { getElement as getHTMLElement } from './utils/get-element.ts';
 
 
-// loadProducts(renderProducts)
 fetchProducts(renderProducts)
+searchProducts(renderProducts)
 
 export function renderProducts() {
    let generateHTML = ''
 
+   console.log(products);
    products.forEach((product) => {
       generateHTML += `
          <div class='product-container' data-product-id='${product.id}'>
@@ -69,3 +70,8 @@ export function renderProducts() {
    getHTMLElement('js-cart-quantity').innerHTML = cart.updateCartQuantity()
 }
 
+const set = new Set()
+
+set.add(1)
+set.add(2)
+set.add(3)

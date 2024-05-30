@@ -16,6 +16,10 @@ export interface ProductDetails {
   sizeChartLink: string
 }
 
+interface DOMEvent<T extends EventTarget> extends Event {
+  readonly target: T
+}
+
 
 class Product {
   id
@@ -52,9 +56,10 @@ class Clothing extends Product {
   }
 }
 
-let products: Array<Product>
+let products: Product[]
+let cloneProduct: any
 
-function fetchProducts(func: Function | undefined = undefined) {
+function fetchProducts(func: Function | null) {
   const productDataPromise = fetch('https://supersimplebackend.dev/products')
     .then((response) => {
       return response.json()
@@ -66,7 +71,7 @@ function fetchProducts(func: Function | undefined = undefined) {
         }
         return new Product(productDetail)
       })
-
+      cloneProduct = products
       console.log('Product loaded');
     })
     .catch(error => {
@@ -81,6 +86,7 @@ function fetchProducts(func: Function | undefined = undefined) {
   return productDataPromise
 }
 
+
 function getProduct(productId: string) {
   const accumulator = (acc: any, curr: Product) => {
     acc[curr.id] = curr
@@ -92,13 +98,22 @@ function getProduct(productId: string) {
   return matchingProduct[productId]
 }
 
-
-function searchProducts() {
-  getElement('search-input').addEventListener('change', () => {
-
+function searchProducts(callback: any) {
+  // let searchResult: Set<Product> = new Set()
+  getElement('search-input').addEventListener('keydown', (e: any) => {
+    // searchResult.clear()
+    // products.forEach((product: Product) => {
+    //   if (product['name'].toLowerCase().indexOf(e.target.value) > -1) {
+    //     searchResult.add(product)
+    //   }
+    // })
+    if (e.key === 'Backspace' || !e.target.value) products = cloneProduct
+    const filterProduct = products.filter(product => product['name'].toLowerCase().includes(e.target.value))
+    products = filterProduct
+    callback()
   })
-}
 
+}
 
 export { products, getProduct, fetchProducts, searchProducts }
 // fetchProducts()s
