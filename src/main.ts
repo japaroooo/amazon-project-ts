@@ -1,4 +1,4 @@
-import { fetchProducts, products, searchProducts } from '../data/products.js';
+import { fetchProducts, products, searchProducts } from '../data/products.ts';
 import cart from '../data/cart-class.ts';
 import { getElement as getHTMLElement } from './utils/get-element.ts';
 
